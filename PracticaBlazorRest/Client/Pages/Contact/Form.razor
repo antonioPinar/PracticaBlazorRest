@@ -1,0 +1,49 @@
+﻿<EditForm Model="@contact" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+   <div class="form-group">
+        <label>Nombre :</label>
+        <div>
+            <InputText @bind-Value="@contact.PersonalName" />
+            <ValidationMessage For="@(() => contact.PersonalName)" />
+        </div>
+    </div>
+     <div class="form-group ">
+        <div>
+            <label>Apellidos :</label>
+            <div>
+                <InputText @bind-Value="@contact.FamilyName" />
+                <ValidationMessage For="@(() => contact.FamilyName)" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group ">
+        <div>
+            <label>Email :</label>
+            <div>
+                <InputText @bind-Value="@contact.Email" />
+                <ValidationMessage For="@(() => contact.Email)" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group ">
+        <div>
+            <label>Teléfono :</label>
+            <div>
+                <InputText @bind-Value="@contact.PhoneNumber" />
+                <ValidationMessage For="@(() => contact.PhoneNumber)" />
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        @ButtonText
+    </button>
+
+</EditForm>
+
+
+@code {
+    [Parameter] public Contact contact { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Guardar";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

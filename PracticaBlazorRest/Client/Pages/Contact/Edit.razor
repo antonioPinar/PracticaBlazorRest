@@ -1,0 +1,26 @@
+﻿@page "/contact/edit/{IdContact}"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+<h3>Editar contacto</h3>
+
+<Form ButtonText="Actualizar" contact="@contact"
+      OnValidSubmit="@EditContact" />
+
+@code {
+    [Parameter] public string IdContact { get; set; }
+    Contact contact = new Contact();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        contact = await http.GetFromJsonAsync<Contact>($"api/contact/{IdContact}");
+    }
+
+    async Task EditContact()
+    {
+        await http.PutAsJsonAsync("api/contact", contact);
+        await js.InvokeVoidAsync("alert", $"¡Se ha actualizado con exito!");
+        uriHelper.NavigateTo("contacts");
+    }
+}

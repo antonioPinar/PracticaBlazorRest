@@ -1,0 +1,18 @@
+﻿@page "/contact/create"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+
+<h3>Crear un nuevo contacto</h3>
+
+<Form ButtonText="Crear contracto" contact="@contact"
+            OnValidSubmit="@CreateContact" />
+
+@code {
+    Contact contact = new Contact();
+
+    async Task CreateContact()
+    {
+        await http.PostAsJsonAsync("api/contact", contact);
+        uriHelper.NavigateTo("contacts");
+    }
+}

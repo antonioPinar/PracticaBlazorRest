@@ -12,21 +12,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PracticaBlazorRest.Server.Controllers
 {
-    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class ContactsController : ControllerBase
+    public class ContactController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<ContactsController> _logger;
+        private readonly ILogger<ContactController> _logger;
 
         private readonly ApplicationDbContext _dbContext;
 
-        public ContactsController(ILogger<ContactsController> logger, ApplicationDbContext dbContext)
+        public ContactController(ILogger<ContactController> logger, ApplicationDbContext dbContext)
         {
             _logger = logger;
             _dbContext = dbContext;
@@ -41,8 +35,8 @@ namespace PracticaBlazorRest.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var dev = await _dbContext.Contacts.FirstOrDefaultAsync(a => a.IdContact == id);
-            return Ok(dev);
+            var contact = await _dbContext.Contacts.FirstOrDefaultAsync(a => a.IdContact == id);
+            return Ok(contact);
         }
 
         [HttpPost]

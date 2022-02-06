@@ -1,15 +1,21 @@
 ﻿@page "/contacts"
-@using PracticaBlazorRest.Shared
 @inject HttpClient Http
 @inject IJSRuntime js
 
-<h1>Weather forecast</h1>
+<h3>Contactos </h3>
 
-<p>This component demonstrates fetching data from the server.</p>
+<div class="form-group">
+    <a class="btn btn-success" href="contact/create"><i class="oi oi-plus"></i> Crear nuevo</a>
+</div>
+<br>
 
 @if (contacts == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Cargando...</em></p>
+}
+else if (contacts.Length == 0)
+{
+    <text>No se encontró ningún registro.</text>
 }
 else
 {
@@ -31,7 +37,7 @@ else
                     <td>@contact.Email</td>
                     <td>@contact.PhoneNumber</td>
                      <td>
-                        <a class="btn btn-success" href="developer/edit/@contact.IdContact">Edit</a>
+                        <a class="btn btn-success" href="contact/edit/@contact.IdContact">Edit</a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(contact.IdContact))">Delete</button>
                     </td>
                 </tr>
@@ -45,7 +51,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        contacts = await Http.GetFromJsonAsync<Contact[]>("api/Contacts");
+        contacts = await Http.GetFromJsonAsync<Contact[]>("api/contact");
     }
 
     async Task Delete(Guid idContact)
@@ -54,7 +60,7 @@ else
 
         if (await js.InvokeAsync<bool>("confirm", $"¿Desea borrar la información del usuario {contac.FullName} con identificación ({contac.IdContact}) ?"))
         {
-            await Http.DeleteAsync($"api/Contacts/{idContact}");
+            await Http.DeleteAsync($"api/Contact/{idContact}");
             await OnInitializedAsync();
         }
     }
