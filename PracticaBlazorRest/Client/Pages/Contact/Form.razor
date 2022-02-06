@@ -1,18 +1,18 @@
-﻿<EditForm Model="@contact" OnValidSubmit="@OnValidSubmit">
+﻿<EditForm Model="@Contact" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
    <div class="form-group">
         <label>Nombre :</label>
         <div>
-            <InputText @bind-Value="@contact.PersonalName" />
-            <ValidationMessage For="@(() => contact.PersonalName)" />
+            <InputText @bind-Value="@Contact.PersonalName" />
+            <ValidationMessage For="@(() => Contact.PersonalName)" />
         </div>
     </div>
      <div class="form-group ">
         <div>
             <label>Apellidos :</label>
             <div>
-                <InputText @bind-Value="@contact.FamilyName" />
-                <ValidationMessage For="@(() => contact.FamilyName)" />
+                <InputText @bind-Value="@Contact.FamilyName" />
+                <ValidationMessage For="@(() => Contact.FamilyName)" />
             </div>
         </div>
     </div>
@@ -20,8 +20,8 @@
         <div>
             <label>Email :</label>
             <div>
-                <InputText @bind-Value="@contact.Email" />
-                <ValidationMessage For="@(() => contact.Email)" />
+                <InputText @bind-Value="@Contact.Email" />
+                <ValidationMessage For="@(() => Contact.Email)" />
             </div>
         </div>
     </div>
@@ -29,8 +29,8 @@
         <div>
             <label>Teléfono :</label>
             <div>
-                <InputText @bind-Value="@contact.PhoneNumber" />
-                <ValidationMessage For="@(() => contact.PhoneNumber)" />
+                <InputText @bind-Value="@Contact.PhoneNumber" />
+                <ValidationMessage For="@(() => Contact.PhoneNumber)" />
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
 
 
 @code {
-    [Parameter] public Contact contact { get; set; }
+    [Parameter] public Contact Contact { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Guardar";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 }

@@ -22,7 +22,7 @@ namespace PracticaBlazorRest.Shared.Models
         [DataMember(Name = "TaxVat")]
         [MaxLength(20)]
         [ConcurrencyCheck]
-        [Required]
+        //[Required]
         public string TaxVat
         {
             get => mTaxVat;
@@ -93,7 +93,7 @@ namespace PracticaBlazorRest.Shared.Models
 
         [DataMember(Name = "PhoneNumber")]
         [MaxLength(30)]
-        [DataType(DataType.PhoneNumber)]
+        //[DataType(DataType.PhoneNumber)]
         public string PhoneNumber
         {
             get => mPhoneNumber;
@@ -106,7 +106,7 @@ namespace PracticaBlazorRest.Shared.Models
 
         [DataMember(Name = "Email")]
         [MaxLength(1024)]
-        [DataType(DataType.EmailAddress)]
+        //[DataType(DataType.EmailAddress)]
         public string Email
         {
             get => mEmail;
@@ -118,8 +118,7 @@ namespace PracticaBlazorRest.Shared.Models
         private string mNotes;
 
         [DataMember(Name = "Notes")]
-        [MaxLength(1024)]
-        [DataType(DataType.EmailAddress)]
+        [MaxLength(4096)]
         public string Notes
         {
             get => mNotes;

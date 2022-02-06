@@ -4,13 +4,16 @@
 
 <h3>Crear un nuevo contacto</h3>
 
-<Form ButtonText="Crear contracto" contact="@contact"
-            OnValidSubmit="@CreateContact" />
+<Form ButtonText="Crear contracto" Contact="@contact"
+            OnValidSubmit="@CreateContact1" />
 
 @code {
-    Contact contact = new Contact();
+    Contact contact = new Contact
+    {
+        IdContact = Guid.NewGuid()
+    };
 
-    async Task CreateContact()
+    async Task CreateContact1()
     {
         await http.PostAsJsonAsync("api/contact", contact);
         uriHelper.NavigateTo("contacts");
