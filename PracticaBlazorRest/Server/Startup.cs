@@ -10,7 +10,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using PracticaBlazorRest.Server.Data;
 using PracticaBlazorRest.Server.Models;
+using PracticaBlazorRest.Shared.Models;
+using System;
 using System.Linq;
+using Nivaes.DataTestGenerator;
 
 namespace PracticaBlazorRest.Server
 {
@@ -27,6 +30,8 @@ namespace PracticaBlazorRest.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            BuildDatabase();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -36,16 +41,15 @@ namespace PracticaBlazorRest.Server
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            //services.AddIdentityServer()
+            //    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+            //services.AddAuthentication()
+            //    .AddIdentityServerJwt();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            //services.AddSwaggerGen();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SwaggerSetupExample", Version = "v1" });
@@ -76,9 +80,9 @@ namespace PracticaBlazorRest.Server
 
             app.UseRouting();
 
-            app.UseIdentityServer();
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseIdentityServer();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -86,6 +90,34 @@ namespace PracticaBlazorRest.Server
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });
+        }
+
+        private void BuildDatabase()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+
+            using var db = new ApplicationDbContext(optionsBuilder.Options);
+
+            if(db.Database.EnsureCreated())
+            {
+                for (var i = 1; i < 200; i++)
+                {
+                    var contact = ContactGenerator.Instance.GenerateContact();
+
+                    db.Contacts.Add(new Contact
+                    {
+                        IdContact = Guid.NewGuid(),
+                        PersonalName = contact.PersonalName!,
+                        FamilyName = contact.FamilyName!,
+                        PhoneNumber = contact.TelephoneNumber!,
+                        Email = contact.Email!,
+                        TaxVat = TaxIdGenerator.GenerateTaxId()
+                    });
+                }
+
+                db.SaveChanges();
+            }
         }
     }
 }

@@ -11,13 +11,13 @@ using PracticaBlazorRest.Shared.Models;
 
 namespace PracticaBlazorRest.Server.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationDbContext : DbContext //ApiAuthorizationDbContext<ApplicationUser>
     {
         public DbSet<Contact> Contacts { get; set; }
 
-        public ApplicationDbContext(
-            DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+        public ApplicationDbContext(DbContextOptions options)
+            : base(options)
+            //IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
 
         }

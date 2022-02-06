@@ -13,7 +13,7 @@ namespace PracticaBlazorRest.Shared.Models
     {
         [Key]
         [DataMember(Name = "IdUser")]
-        public Guid Id { get; set; }
+        public Guid IdContact { get; set; }
 
         #region TaxVat
         [IgnoreDataMember]

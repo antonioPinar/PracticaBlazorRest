@@ -7,10 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PracticaBlazorRest.Shared.Models;
+using PracticaBlazorRest.Server.Data;
 
 namespace PracticaBlazorRest.Server.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ContactsController : ControllerBase
@@ -22,23 +23,18 @@ namespace PracticaBlazorRest.Server.Controllers
 
         private readonly ILogger<ContactsController> _logger;
 
-        public ContactsController(ILogger<ContactsController> logger)
+        private readonly ApplicationDbContext _dbContext;
+
+        public ContactsController(ILogger<ContactsController> logger, ApplicationDbContext dbContext)
         {
             _logger = logger;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
         public IEnumerable<Contact> Get()
         {
-            return new Contact[]
-            {
-                new Contact
-                {
-                    Id = Guid.NewGuid(),
-                    PersonalName="Uno",
-                    FamilyName ="dos"
-                }
-            };
+            return _dbContext.Contacts.ToList();
         }
     }
 }
