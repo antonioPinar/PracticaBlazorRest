@@ -32,11 +32,12 @@ namespace PracticaBlazorRest.Server.Controllers
         {
             return new Contact[]
             {
-               new Contact
-               {
+                new Contact
+                {
+                    Id = Guid.NewGuid(),
                     PersonalName="Uno",
                     FamilyName ="dos"
-               }
+                }
             };
         }
     }
