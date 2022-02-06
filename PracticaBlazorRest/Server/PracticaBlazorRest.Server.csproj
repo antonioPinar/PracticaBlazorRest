@@ -9,6 +9,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.13" />
     <PackageReference Include="Nivaes.DataTestGenerator" Version="2.7.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="5.13.8" />
   </ItemGroup>
 
   <ItemGroup>

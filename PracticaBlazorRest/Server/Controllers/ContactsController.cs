@@ -8,12 +8,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using PracticaBlazorRest.Shared.Models;
 using PracticaBlazorRest.Server.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace PracticaBlazorRest.Server.Controllers
 {
     //[Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ContactsController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -35,6 +36,36 @@ namespace PracticaBlazorRest.Server.Controllers
         public IEnumerable<Contact> Get()
         {
             return _dbContext.Contacts.ToList();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var dev = await _dbContext.Contacts.FirstOrDefaultAsync(a => a.IdContact == id);
+            return Ok(dev);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(Contact contact)
+        {
+            _dbContext.Add(contact);
+            await _dbContext.SaveChangesAsync();
+            return Ok(contact.IdContact);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(Contact contact)
+        {
+            _dbContext.Entry(contact).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _dbContext.Contacts.DeleteByKeyAsync(id);
+            return NoContent();
         }
     }
 }

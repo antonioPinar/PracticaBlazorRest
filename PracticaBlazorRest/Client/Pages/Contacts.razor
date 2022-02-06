@@ -1,0 +1,61 @@
+﻿@page "/contacts"
+@using PracticaBlazorRest.Shared
+@inject HttpClient Http
+@inject IJSRuntime js
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (contacts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>e-Mail</th>
+                <th>Número de teléfono</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contact in contacts)
+            {
+                <tr>
+                    <td>@contact.PersonalName</td>
+                    <td>@contact.FamilyName</td>
+                    <td>@contact.Email</td>
+                    <td>@contact.PhoneNumber</td>
+                     <td>
+                        <a class="btn btn-success" href="developer/edit/@contact.IdContact">Edit</a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(contact.IdContact))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Contact[] contacts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        contacts = await Http.GetFromJsonAsync<Contact[]>("api/Contacts");
+    }
+
+    async Task Delete(Guid idContact)
+    {
+        var contac = contacts.First(x => x.IdContact == idContact);
+
+        if (await js.InvokeAsync<bool>("confirm", $"¿Desea borrar la información del usuario {contac.FullName} con identificación ({contac.IdContact}) ?"))
+        {
+            await Http.DeleteAsync($"api/Contacts/{idContact}");
+            await OnInitializedAsync();
+        }
+    }
+}
