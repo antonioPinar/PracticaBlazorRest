@@ -63,6 +63,7 @@ namespace PracticaBlazorRest.Shared.Models
         [DataMember(Name = "PersonalName")]
         [Required(ErrorMessage ="El nombre es requerido")]
         [MaxLength(500)]
+        [StringLength(100, MinimumLength = 4, ErrorMessage = "El nombre ha de tener entre 4 y 100 caracteres.")]
         public string PersonalName
         {
             get => mPersonalName;
@@ -77,6 +78,7 @@ namespace PracticaBlazorRest.Shared.Models
         [DataMember(Name = "FamilyName")]
         [MaxLength(500)]
         [Required(ErrorMessage = "El apellido es requerido")]
+        [StringLength(100, MinimumLength = 4, ErrorMessage = "El apellido ha de tener entre 4 y 100 caracteres.")]
         public string FamilyName
         {
             get => mFamilyName;
@@ -95,7 +97,7 @@ namespace PracticaBlazorRest.Shared.Models
 
         [DataMember(Name = "PhoneNumber")]
         [MaxLength(30)]
-        [Required(ErrorMessage = "El numero de teléfono es requerido")]
+        [Required(ErrorMessage = "El número de teléfono es requerido")]
         //[DataType(DataType.PhoneNumber)]
         public string PhoneNumber
         {
