@@ -11,7 +11,7 @@
         <div>
             <label>Apellidos :</label>
             <div>
-                <InputText @bind-Value="@Contact.FamilyName" />
+                <InputText @bind-Value="@Contact.FamilyName" id="FamilyName"/>
                 <ValidationMessage For="@(() => Contact.FamilyName)" />
             </div>
         </div>
