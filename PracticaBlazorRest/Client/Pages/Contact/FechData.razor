@@ -22,6 +22,7 @@ else
     <table class="table">
         <thead>
             <tr>
+                <th>DNI</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>e-Mail</th>
@@ -32,6 +33,7 @@ else
             @foreach (var contact in contacts)
             {
                 <tr>
+                    <td>@contact.TaxVat</td>
                     <td>@contact.PersonalName</td>
                     <td>@contact.FamilyName</td>
                     <td>@contact.Email</td>
