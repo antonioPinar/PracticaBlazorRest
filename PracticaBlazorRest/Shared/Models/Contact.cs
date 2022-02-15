@@ -22,7 +22,7 @@ namespace PracticaBlazorRest.Shared.Models
         [DataMember(Name = "TaxVat")]
         [MaxLength(20)]
         [ConcurrencyCheck]
-        //[Required]
+        [Required(ErrorMessage = "DNI necesario")]
         public string TaxVat
         {
             get => mTaxVat;
