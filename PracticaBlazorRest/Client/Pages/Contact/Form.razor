@@ -1,17 +1,27 @@
 ﻿<EditForm Model="@Contact" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
-   <div class="form-group">
+    <div class="form-group ">
+        <div>
+            <label>DNI :</label>
+            <div>
+                <InputText @bind-Value="@Contact.TaxVat"/>
+                <ValidationMessage For="@(() => Contact.TaxVat)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
         <label>Nombre :</label>
         <div>
             <InputText @bind-Value="@Contact.PersonalName" />
             <ValidationMessage For="@(() => Contact.PersonalName)" />
         </div>
     </div>
-     <div class="form-group ">
+    <div class="form-group ">
         <div>
             <label>Apellidos :</label>
             <div>
-                <InputText @bind-Value="@Contact.FamilyName" id="FamilyName"/>
+                <InputText @bind-Value="@Contact.FamilyName" id="FamilyName" />
                 <ValidationMessage For="@(() => Contact.FamilyName)" />
             </div>
         </div>
